@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.card {
+    height: 83vh;
+}
+
+.hero {
+    background-image:url('/astrobg3.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.about {
+    background-image:url('/bgGradient1.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    overflow: hidden;
+}
+
+.gradientBottom {
+    background-image:url('/bgGradient3.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+    overflow: hidden;
+}
+
+.gradientBottom1 {
+    background-image:url('/bgGradient2.png');
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: bottom;
+    overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
