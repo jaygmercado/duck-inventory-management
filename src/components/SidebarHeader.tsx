@@ -3,25 +3,11 @@ import React from 'react';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
 import SidebarItems from './SidebarItems';
 import SidebarLink from './SidebarLink';
 
-const SidebarHeader = ({
-  email,
-  image,
-  userRoles,
-}: {
-  email: string;
-  image: string;
-  userRoles: string[];
-}) => {
-  const filteredSidebar = SidebarItems.filter((item) =>
-    item.roles.find((role) => userRoles.includes(role)),
-  );
-
+const SidebarHeader = () => {
   const signOutUser = () => {
-    signOut();
     redirect('/');
   };
 
@@ -53,7 +39,7 @@ const SidebarHeader = ({
               href='#'
               aria-label='Brand'
             >
-              <Image src='/LCS_logo.svg' width={185} height={185} alt='LCS' priority />
+              <Image src='/adidas.png' width={185} height={185} alt='LCS' priority />
             </Link>
           </div>
 
@@ -130,7 +116,7 @@ const SidebarHeader = ({
                 >
                   <Image
                     className='inline-block rounded-full ring-2 ring-white dark:ring-gray-800'
-                    src={image}
+                    src={''}
                     alt='Image Description'
                     width={32}
                     height={32}
@@ -143,25 +129,11 @@ const SidebarHeader = ({
                 >
                   <div className='py-3 px-5 -m-2 bg-gray-100 rounded-t-lg dark:bg-gray-700'>
                     <p className='text-sm text-gray-500 dark:text-gray-400'>Signed in as</p>
-                    <p className='text-sm font-medium text-gray-800 dark:text-gray-300'>{email}</p>
+                    <p className='text-sm font-medium text-gray-800 dark:text-gray-300'>
+                      {'email'}
+                    </p>
                   </div>
                   <div className='mt-2 py-2 first:pt-0 last:pb-0'>
-                    <Link
-                      className='flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300'
-                      href='/portal/profile'
-                    >
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='16'
-                        height='16'
-                        fill='currentColor'
-                        className='bi bi-person'
-                        viewBox='0 0 16 16'
-                      >
-                        <path d='M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z' />
-                      </svg>
-                      Profile
-                    </Link>
                     <span
                       className='flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300'
                       onClick={() => signOutUser()}
@@ -203,7 +175,7 @@ const SidebarHeader = ({
             href='#'
             aria-label='Brand'
           >
-            <Image src='/LCS_logo.svg' width={120} height={120} alt='LCS' priority />
+            <Image src='/adidas.png' width={60} height={60} alt='Adidas' priority />
           </Link>
 
           <button
@@ -225,7 +197,7 @@ const SidebarHeader = ({
           data-hs-accordion-always-open
         >
           <ul className='space-y-1.5'>
-            {filteredSidebar.map((item) => {
+            {SidebarItems.map((item) => {
               return (
                 <SidebarLink
                   key={item.name}
