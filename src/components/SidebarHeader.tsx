@@ -116,7 +116,7 @@ const SidebarHeader = () => {
                 >
                   <Image
                     className='inline-block rounded-full ring-2 ring-white dark:ring-gray-800'
-                    src={''}
+                    src='/admin.png'
                     alt='Image Description'
                     width={32}
                     height={32}
@@ -199,14 +199,7 @@ const SidebarHeader = () => {
           <ul className='space-y-1.5'>
             {SidebarItems.map((item) => {
               return (
-                <SidebarLink
-                  key={item.name}
-                  name={item.name}
-                  path={item.path}
-                  icon={item.icon}
-                  dropdown={item.dropdown}
-                  subItems={item.subItems}
-                />
+                <SidebarLink key={item.name} name={item.name} path={item.path} icon={item.icon} />
               );
             })}
           </ul>
