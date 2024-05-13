@@ -10,8 +10,8 @@ const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const user = { id: '1', name: 'admin', password: 'adidas' };
-        if (credentials?.username === 'admin' && credentials?.password === 'adidas') {
+        const user = { id: '1', name: 'a', password: 'a' };
+        if (credentials?.username === user.name && credentials?.password === user.password) {
           return user;
         }
         return null;
@@ -20,8 +20,6 @@ const authOptions = {
   ],
 };
 
-const handler = NextAuth({
-  ...authOptions,
-});
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

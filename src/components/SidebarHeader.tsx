@@ -1,16 +1,12 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import SidebarItems from './SidebarItems';
 import SidebarLink from './SidebarLink';
 
 const SidebarHeader = () => {
-  const signOutUser = () => {
-    redirect('/');
-  };
-
   return (
     <div>
       <header className='sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 lg:pl-64 dark:bg-gray-800 dark:border-gray-700'>
@@ -128,15 +124,14 @@ const SidebarHeader = () => {
                   aria-labelledby='hs-dropdown-with-header'
                 >
                   <div className='py-3 px-5 -m-2 bg-gray-100 rounded-t-lg dark:bg-gray-700'>
-                    <p className='text-sm text-gray-500 dark:text-gray-400'>Signed in as</p>
-                    <p className='text-sm font-medium text-gray-800 dark:text-gray-300'>
-                      {'email'}
+                    <p className='text-sm text-gray-500 dark:text-gray-400'>
+                      Signed in as <strong>Admin</strong>
                     </p>
                   </div>
                   <div className='mt-2 py-2 first:pt-0 last:pb-0'>
                     <span
                       className='flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300'
-                      onClick={() => signOutUser()}
+                      onClick={() => signOut()}
                     >
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -155,7 +150,7 @@ const SidebarHeader = () => {
                           d='M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z'
                         />
                       </svg>
-                      Logout
+                      Sign Out
                     </span>
                   </div>
                 </div>

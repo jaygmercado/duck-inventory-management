@@ -5,8 +5,8 @@ export const productSchema = Yup.object({
   description: Yup.string()
     .max(50, 'Description must not exceed 500 characters')
     .required('Required'),
-  price: Yup.number().min(0).required(),
-  quantity: Yup.string().min(0).required(),
-  category: Yup.string().required(),
-  supplier: Yup.string().required(),
+  price: Yup.number().min(0).required('Required'),
+  quantity: Yup.string().min(0).required('Required'),
+  category: Yup.string().required('Required'),
+  supplier: Yup.string().required('Required'),
 });

@@ -16,7 +16,7 @@ const deleteProduct = async (itemId: string) => {
   return await res.json().then((res) => res.data as ProductType);
 };
 
-export default function Users() {
+export default function Products() {
   const { products, setProducts } = useProductsContext();
 
   const columns: ColumnDef<ProductType>[] = [
@@ -28,22 +28,22 @@ export default function Users() {
     {
       id: 'price',
       header: 'Price',
-      accessorKey: 'email',
+      accessorKey: 'price',
     },
     {
       id: 'quantity',
       header: 'Quantity',
-      accessorKey: 'email',
+      accessorKey: 'quantity',
     },
     {
       id: 'category',
       header: 'category',
-      accessorKey: 'email',
+      accessorKey: 'category',
     },
     {
       id: 'supplier',
       header: 'Supplier',
-      accessorKey: 'email',
+      accessorKey: 'supplier',
     },
     {
       id: 'actions',
@@ -51,16 +51,16 @@ export default function Users() {
       accessorKey: '_id',
       cell: (item) => (
         <div className='space-x-2'>
-          <EditButton updateLink={`/portal/users/update/${item.getValue()}`} />
+          <EditButton updateLink={`/admin/products/update/${item.getValue()}`} />
           <DeleteButton
             onDelete={() =>
               deleteProduct(item.getValue() as string)
-                .then((deletedUser) =>
+                .then((deletedProduct) =>
                   setProducts((state) =>
-                    state.filter((userItem) => userItem._id != deletedUser._id),
+                    state.filter((productItem) => +productItem._id !== +deletedProduct._id),
                   ),
                 )
-                .catch(() => notify('Error', 'Unable to delete user'))
+                .catch(() => notify('Error', 'Unable to delete product'))
             }
           />
         </div>
@@ -68,5 +68,5 @@ export default function Users() {
       enableSorting: false,
     },
   ];
-  return <Table itemClass='Users' DATA={products} COLUMNS={columns} />;
+  return <Table itemClass='Products' DATA={products} COLUMNS={columns} />;
 }

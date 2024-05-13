@@ -1,29 +1,46 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
+import { useProductsContext } from '../../layout';
 import Input from '@/components/Input';
 import TextArea from '@/components/TextArea';
 import notify from '@/utils/notify';
 import { productSchema } from '@/schema/product';
 import { ProductType } from '@/types/products';
-import { useProductsContext } from '../layout';
 
-const createProduct = async (data: Partial<ProductType>) => {
-  const res = await fetch('/api/products', {
-    method: 'POST',
+const updateProduct = async (id: string, data: Partial<ProductType>) => {
+  const res = await fetch(`/api/products/${id}`, {
+    method: 'PUT',
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error('Failed to update product');
-  return (await res.json()) as ProductType[];
+  if (!res.ok) throw new Error('Failed to update products');
+  return (await res.json()) as ProductType;
 };
 
-function CreateProduct() {
+const getProductData = async (id: string) => {
+  const res = await fetch(`/api/products/${id}`);
+  if (!res.ok) throw new Error('unable to fetch product data');
+  return res.json().then((res) => res.data as ProductType);
+};
+
+function UpdateUsers() {
   const router = useRouter();
   const { setProducts } = useProductsContext();
   const [submitting, setSubmitting] = useState(false);
-  const [productData] = useState<ProductType | null>(null);
+  const [productData, setProductData] = useState<ProductType | null>(null);
+  const { id } = useParams();
+  const [fetching, setFetching] = useState(true);
+
+  useEffect(() => {
+    getProductData(id as string)
+      .then((res) => {
+        setProductData(res);
+        setFetching(false);
+      })
+      .catch(() => notify('Error', `Cannot find product: ${id}`));
+  }, [id]);
 
   const { touched, handleSubmit, getFieldProps, errors, isValid } = useFormik({
     enableReinitialize: true,
@@ -37,14 +54,19 @@ function CreateProduct() {
     },
     onSubmit: (values) => {
       setSubmitting(true);
-      createProduct(values as ProductType)
-        .then((products) => {
-          setProducts(products);
-          notify('Success', 'Product Successfully Created');
+      updateProduct(id as string, values as ProductType)
+        .then((updateProduct) => {
+          setProducts((currentState) =>
+            currentState.map((product) => {
+              if (product._id === updateProduct._id) return updateProduct;
+              return product;
+            }),
+          );
+          notify('Success', 'Product Successfuly Updated');
           router.push('/portal/products');
         })
-        .catch((error) => {
-          notify('Error', error.message);
+        .catch(() => {
+          notify('Error', 'Unable to update product');
           router.push('/portal/products');
         });
     },
@@ -63,7 +85,8 @@ function CreateProduct() {
           {...getFieldProps('name')}
           touched={touched.name}
           errors={errors.name}
-          placeholder=''
+          disabled={fetching}
+          placeholder={fetching ? 'loading...' : ''}
         />
       </div>
 
@@ -76,7 +99,8 @@ function CreateProduct() {
           {...getFieldProps('description')}
           touched={touched.description}
           errors={errors.description}
-          placeholder=''
+          disabled={fetching}
+          placeholder={fetching ? 'loading...' : ''}
         />
       </div>
 
@@ -89,7 +113,8 @@ function CreateProduct() {
             {...getFieldProps('price')}
             touched={touched.price}
             errors={errors.price}
-            placeholder=''
+            disabled={fetching}
+            placeholder={fetching ? 'loading...' : ''}
           />
         </div>
 
@@ -101,7 +126,8 @@ function CreateProduct() {
             {...getFieldProps('quantity')}
             touched={touched.quantity}
             errors={errors.quantity}
-            placeholder=''
+            disabled={fetching}
+            placeholder={fetching ? 'loading...' : ''}
           />
         </div>
       </div>
@@ -114,7 +140,8 @@ function CreateProduct() {
           {...getFieldProps('category')}
           touched={touched.category}
           errors={errors.category}
-          placeholder=''
+          disabled={fetching}
+          placeholder={fetching ? 'loading...' : ''}
         />
       </div>
 
@@ -126,7 +153,8 @@ function CreateProduct() {
           {...getFieldProps('supplier')}
           touched={touched.supplier}
           errors={errors.supplier}
-          placeholder=''
+          disabled={fetching}
+          placeholder={fetching ? 'loading...' : ''}
         />
       </div>
 
@@ -151,4 +179,4 @@ function CreateProduct() {
   );
 }
 
-export default CreateProduct;
+export default UpdateUsers;
