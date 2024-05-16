@@ -60,7 +60,7 @@ const Table = <T extends { _id: string }>({ DATA, COLUMNS, itemClass }: ITablePr
   return (
     <>
       <div className='px-6 py-3 flex justify-between items-center space-x-4'>
-        <SearchBar placeholder='Search by Name' value={filtering} onChange={setFiltering} />
+        <SearchBar placeholder='Search' value={filtering} onChange={setFiltering} />
         <div className='flex items-center space-x-5 pr-3'>
           <div>
             <select

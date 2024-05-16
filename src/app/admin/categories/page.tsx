@@ -37,7 +37,7 @@ export default function Categories() {
               deleteCategory(item.getValue() as string)
                 .then((deletedCategory) =>
                   setCategories((state) =>
-                    state.filter((categoryItem) => +categoryItem._id !== +deletedCategory._id),
+                    state.filter((categoryItem) => categoryItem._id !== deletedCategory._id),
                   ),
                 )
                 .catch(() => notify('Error', 'Unable to delete category'))

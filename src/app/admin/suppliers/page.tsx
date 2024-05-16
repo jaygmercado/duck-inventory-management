@@ -50,11 +50,11 @@ export default function Products() {
           <DeleteButton
             onDelete={() =>
               deleteSupplier(item.getValue() as string)
-                .then((deletedSupplier) =>
+                .then((deletedSupplier) => {
                   setSuppliers((state) =>
-                    state.filter((supplierItem) => +supplierItem._id !== +deletedSupplier._id),
-                  ),
-                )
+                    state.filter((supplierItem) => supplierItem._id !== deletedSupplier._id),
+                  );
+                })
                 .catch(() => notify('Error', 'Unable to delete supplier'))
             }
           />
@@ -63,5 +63,5 @@ export default function Products() {
       enableSorting: false,
     },
   ];
-  return <Table itemClass='Products' DATA={suppliers} COLUMNS={columns} />;
+  return <Table itemClass='Suppliers' DATA={suppliers} COLUMNS={columns} />;
 }

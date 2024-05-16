@@ -1,7 +1,9 @@
 'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import notify from '@/utils/notify';
 import { CategoryType, CategoryContextType } from '@/types/categories';
+import Link from 'next/link';
 
 const CategoriesContext = createContext<CategoryContextType>({
   categories: [],
@@ -18,6 +20,7 @@ const loadCategories = async () => {
 };
 
 export default function UsersLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
   useEffect(() => {
@@ -29,7 +32,17 @@ export default function UsersLayout({ children }: { children: React.ReactNode })
   return (
     <CategoriesContext.Provider value={{ categories, setCategories }}>
       <main>
-        <h1 className='font-bold text-2xl mb-5'>Categories</h1>
+        <div className='flex justify-between'>
+          <h1 className='font-bold text-2xl mb-5'>Categories</h1>
+          {pathname === '/admin/categories' && (
+            <Link
+              href='/admin/categories/create'
+              className='text-blue-500 hover:text-blue-700 disabled:hover:cursor-not-allowed disabled:text-blue-200'
+            >
+              Create
+            </Link>
+          )}
+        </div>
         <div className='flex flex-col'>
           <div className='-m-1.5 overflow-x-auto'>
             <div className='p-1.5 min-w-full inline-block align-middle'>

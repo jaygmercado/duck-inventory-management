@@ -21,7 +21,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     AOS.init({ duration: 500 });
   }, []);
 
-  if (session.status === 'unauthenticated') redirect('/');
+  // if (session.status === 'unauthenticated') redirect('/');
 
   return (
     <main className={`${inter.className} overflow-x-hidden overflow-y-scroll grow`}>

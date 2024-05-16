@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     await connectMongo();
     await SupplierModel.create(body);
-    return NextResponse.json({ status: 'Success' });
+    const suppliers = await SupplierModel.find();
+    return NextResponse.json({ status: 'Success', data: suppliers });
   } catch (error) {
     console.error('Error in /api/suppliers (POST): ', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

@@ -57,7 +57,7 @@ export default function Products() {
               deleteProduct(item.getValue() as string)
                 .then((deletedProduct) =>
                   setProducts((state) =>
-                    state.filter((productItem) => +productItem._id !== +deletedProduct._id),
+                    state.filter((productItem) => productItem._id !== deletedProduct._id),
                   ),
                 )
                 .catch(() => notify('Error', 'Unable to delete product'))

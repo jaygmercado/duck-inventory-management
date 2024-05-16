@@ -5,8 +5,8 @@ const productSchema = new Schema({
   description: { type: String },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
-  category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
-  supplier: { type: Schema.Types.ObjectId, ref: 'Supplier', required: true },
+  category: { type: String, required: true },
+  supplier: { type: String, required: true },
 });
 
 const Product = models['product'] || model('product', productSchema);
