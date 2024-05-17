@@ -10,7 +10,7 @@ const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const user = { id: '1', name: 'a', password: 'a' };
+        const user = { id: '1', name: 'admin', password: 'adidas' };
         if (credentials?.username === user.name && credentials?.password === user.password) {
           return user;
         }
