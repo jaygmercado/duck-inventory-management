@@ -5,6 +5,8 @@ import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import notify from '@/utils/notify';
 import { ProductType } from '@/types/products';
+import Products from '@/components/Products';
+import PurchaseForm from '@/components/PurchaseForm';
 
 const loadProducts = async () => {
   const res = await fetch('/api/products');
@@ -16,22 +18,32 @@ const loadProducts = async () => {
 export default function App() {
   const session = useSession();
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [productToPurchase, setProductToPurchase] = useState<ProductType | null>(null);
+
   useEffect(() => {
     loadProducts()
       .then(setProducts)
       .catch(() => notify('Error', 'Unable to retrieve products'));
   }, []);
+
   return (
     <main className='h-full'>
       <h1 className='font-bold text-2xl mb-5'>Welcome</h1>
       {session.status === 'authenticated' ? (
-        <Link href='/admin'>Admin</Link>
+        <Link href='/admin'>Admin Page</Link>
       ) : (
-        <button onClick={() => signIn()}>Sign In</button>
+        <button onClick={() => signIn()}>Admin? Sign In</button>
       )}
-      {products.map((product) => (
-        <div key={product._id}>{product.name}</div>
-      ))}
+
+      {productToPurchase !== null ? (
+        <PurchaseForm
+          productToPurchase={productToPurchase}
+          setProducts={setProducts}
+          setProductToPurchase={setProductToPurchase}
+        />
+      ) : (
+        <Products products={products} setProductToPurchase={setProductToPurchase} />
+      )}
     </main>
   );
 }

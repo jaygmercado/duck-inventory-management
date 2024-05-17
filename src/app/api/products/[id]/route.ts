@@ -18,7 +18,9 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   try {
     const body = await req.json();
     await connectMongo();
+    console.log(body);
     const res = await ProductModel.findOneAndUpdate({ _id: params.id }, body, { new: true });
+    console.log(res)
     return NextResponse.json({ status: 'Success', data: res });
   } catch (error) {
     console.error('Error in /api/products/[id] (PUT): ', error);
