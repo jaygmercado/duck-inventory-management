@@ -66,118 +66,104 @@ const PurchaseForm: React.FC<{
   if (submitting) return <div>Submitting</div>;
 
   return (
-    <form onSubmit={handleSubmit} className='p-10 space-y-5'>
-      <h2>Purchase</h2>
-      <h2>Product: {productToPurchase.name}</h2>
-      <p>
-        Price:
-        {new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(
-          productToPurchase.price,
-        )}
-      </p>
+    <form onSubmit={handleSubmit}>
+      <div className='max-w-2xl px-4 py-5 sm:px-6 lg:px-8 lg:py-14 mx-auto'>
+        {/* Card */}
+        <div className='bg-white rounded-xl shadow p-4 sm:p-7'>
+          <div className='text-center mb-8'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='100'
+              height='100'
+              fill='currentColor'
+              className='bi bi-cart-check mx-auto p-5 text-sky-700'
+              viewBox='0 0 16 16'
+            >
+              <path d='M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z' />
+              <path d='M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0' />
+            </svg>
+            <h2 className='text-2xl md:text-3xl font-bold text-gray-800'>Purchase Form</h2>
+            <p className='text-sm text-gray-600'>Input the required information below</p>
+          </div>
 
-      <div className='flex justify-between'>
-        <div>
-          <label htmlFor='quantity' className='block text-sm font-medium mb-2 dark:text-white'>
-            Quantity
-          </label>
-          <Input
-            {...getFieldProps('quantity')}
-            touched={touched.quantity}
-            errors={errors.quantity}
-            type='number'
-            placeholder=''
-          />
+          <form>
+            <div className='py-6 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200'>
+              <label
+                htmlFor='af-payment-billing-address'
+                className='inline-block text-md font-semibold'
+              >
+                Billing Details
+              </label>
+
+              <div className='mt-2 space-y-3'>
+                <Input
+                  {...getFieldProps('barangay')}
+                  touched={touched.barangay}
+                  errors={errors.barangay}
+                  type='text'
+                  className='py-2 px-3 pe-11 block w-full border border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none'
+                  placeholder='Barangay'
+                />
+                <Input
+                  {...getFieldProps('city')}
+                  touched={touched.city}
+                  errors={errors.city}
+                  type='text'
+                  className='py-2 px-3 pe-11 block w-full border border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none'
+                  placeholder='City'
+                />
+                <Input
+                  {...getFieldProps('province')}
+                  touched={touched.province}
+                  errors={errors.province}
+                  type='text'
+                  className='py-2 px-3 pe-11 block w-full border border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none'
+                  placeholder='Province'
+                />
+                <Input
+                  {...getFieldProps('zipCode')}
+                  touched={touched.zipCode}
+                  errors={errors.zipCode}
+                  type='text'
+                  className='py-2 px-3 pe-11 block w-full border border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none'
+                  placeholder='ZIP Code'
+                />
+                <Input
+                  {...getFieldProps('phoneNumber')}
+                  touched={touched.phoneNumber}
+                  errors={errors.phoneNumber}
+                  type='text'
+                  className='py-2 px-3 pe-11 block w-full border border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none'
+                  placeholder='Phone Number'
+                />
+              </div>
+            </div>
+          </form>
+
+          <p className='text-sm text-gray-700 pt-7'>Total:</p>
+          <p className='font-bold' style={{ fontSize: 30 }}>
+            {new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(
+              productToPurchase.price * values.quantity,
+            )}
+          </p>
+
+          <div className='mt-5 flex justify-end gap-x-2'>
+            <button
+              onClick={() => setProductToPurchase(null)}
+              type='button'
+              className='py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none'
+            >
+              Cancel
+            </button>
+            <button
+              disabled={!isValid}
+              type='button'
+              className='py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-sky-600 text-white hover:bg-sky-700 disabled:opacity-50 disabled:pointer-events-none'
+            >
+              Purchase
+            </button>
+          </div>
         </div>
-      </div>
-
-      <div>
-        <label htmlFor='barangay' className='block text-sm font-medium mb-2 dark:text-white'>
-          Barangay
-        </label>
-        <Input
-          {...getFieldProps('barangay')}
-          touched={touched.barangay}
-          errors={errors.barangay}
-          type='text'
-          placeholder=''
-        />
-      </div>
-
-      <div>
-        <label htmlFor='city' className='block text-sm font-medium mb-2 dark:text-white'>
-          City
-        </label>
-        <Input
-          {...getFieldProps('city')}
-          touched={touched.city}
-          errors={errors.city}
-          type='text'
-          placeholder=''
-        />
-      </div>
-
-      <div>
-        <label htmlFor='province' className='block text-sm font-medium mb-2 dark:text-white'>
-          Province
-        </label>
-        <Input
-          {...getFieldProps('province')}
-          touched={touched.province}
-          errors={errors.province}
-          type='text'
-          placeholder=''
-        />
-      </div>
-
-      <div>
-        <label htmlFor='zipCode' className='block text-sm font-medium mb-2 dark:text-white'>
-          ZIP Code
-        </label>
-        <Input
-          {...getFieldProps('zipCode')}
-          touched={touched.zipCode}
-          errors={errors.zipCode}
-          type='text'
-          placeholder=''
-        />
-      </div>
-
-      <div>
-        <label htmlFor='phoneNumber' className='block text-sm font-medium mb-2 dark:text-white'>
-          Phone Number
-        </label>
-        <Input
-          {...getFieldProps('phoneNumber')}
-          touched={touched.phoneNumber}
-          errors={errors.phoneNumber}
-          type='text'
-          placeholder=''
-        />
-      </div>
-
-      <p>
-        Total:
-        {new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(
-          productToPurchase.price * values.quantity,
-        )}
-      </p>
-
-      <div className='space-x-4 flex justify-end'>
-        <button
-          type='button'
-          onClick={() => setProductToPurchase(null)}
-          className='disabled:cursor-not-allowed py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-gray-200 font-semibold text-gray-500 hover:text-white hover:bg-gray-500 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2 transition-all text-sm  dark:hover:bg-gray-600 dark:border-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-600 dark:focus:ring-offset-gray-800'
-        >
-          Cancel
-        </button>
-        <button
-          disabled={!isValid}
-          type='submit'
-          className='disabled:cursor-not-allowed py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border-2 border-green-200 font-semibold text-green-500 hover:text-white hover:bg-green-500 hover:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800'
-        >
-          Purchase
-        </button>
       </div>
     </form>
   );
